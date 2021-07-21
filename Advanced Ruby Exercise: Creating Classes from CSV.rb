@@ -6,11 +6,11 @@ require 'csv'
 
 # This DynamicClass is created to create classes and their methods run time
 class DynamicClass
-  attr_accessor :filename, :file_data, :class_name, :class_methods, :class_objects
+  attr_accessor :file_name, :file_data, :class_name, :class_methods, :class_objects
 
-  def initialize(filename)
-    @filename = filename
-    @file_data = CSV.read(filename, headers: true)
+  def initialize(file_name)
+    @file_name = file_name
+    @file_data = CSV.read(file_name, headers: true)
     @class_name = Object.const_set(create_dynamic_class, Class.new)
     @class_methods = file_data.headers
     @class_objects = []
@@ -40,7 +40,7 @@ class DynamicClass
   private
 
   def create_dynamic_class
-    File.basename(filename, '.csv').capitalize
+    File.basename(file_name, '.csv').capitalize
   end
 
   def create_methods
